@@ -1,0 +1,205 @@
+{
+    "info": {
+      "name": "Ticket Management System",
+      "_postman_id": "12345678-90ab-cdef-1234-567890abcdef",
+      "description": "API documentation for Ticket Management System. This system allows users to register, login, and purchase tickets for buses. Admins can manage buses and tickets.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Authentication",
+        "item": [
+          {
+            "name": "Register User",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/register",
+                "host": ["{{base_url}}"],
+                "path": ["auth", "register"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Login User",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/login",
+                "host": ["{{base_url}}"],
+                "path": ["auth", "login"]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "Admin",
+        "item": [
+          {
+            "name": "Add Bus",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Bus 101\",\n  \"route\": \"City A to City B\",\n  \"totalSeats\": 40\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/admin/bus",
+                "host": ["{{base_url}}"],
+                "path": ["admin", "bus"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Update Bus",
+            "request": {
+              "method": "PUT",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Updated Bus Name\",\n  \"route\": \"New Route\",\n  \"totalSeats\": 50\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/admin/bus/:id",
+                "host": ["{{base_url}}"],
+                "path": ["admin", "bus", ":id"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Delete Bus",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/admin/bus/:id",
+                "host": ["{{base_url}}"],
+                "path": ["admin", "bus", ":id"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Add Ticket",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"busId\": \"63a16d58f2f9b2c478c2fabb\",\n  \"price\": 25,\n  \"timeSlot\": \"2024-12-15T10:00:00Z\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/admin/ticket",
+                "host": ["{{base_url}}"],
+                "path": ["admin", "ticket"]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "User",
+        "item": [
+          {
+            "name": "View All Buses",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{base_url}}/buses",
+                "host": ["{{base_url}}"],
+                "path": ["buses"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "View Available Tickets",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{base_url}}/tickets",
+                "host": ["{{base_url}}"],
+                "path": ["tickets"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Purchase Ticket",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"ticketId\": \"63a16d58f2f9b2c478c2fabc\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/tickets/purchase",
+                "host": ["{{base_url}}"],
+                "path": ["tickets", "purchase"]
+              }
+            },
+            "response": []
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://localhost:5000"
+      },
+      {
+        "key": "token",
+        "value": ""
+      }
+    ]
+  }
+  
