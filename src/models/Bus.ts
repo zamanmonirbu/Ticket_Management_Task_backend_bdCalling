@@ -1,17 +1,30 @@
-import mongoose, { Document, Schema } from 'mongoose';
+  // src/models/Bus.ts
+  import mongoose, { Document, Schema } from 'mongoose';
 
-export interface IBus extends Document {
-  name: string;
-  route: string;
-  totalSeats: number;
-  createdBy: mongoose.Types.ObjectId;
-}
+  export interface ISchedule {
+    from: string;
+    to: string;
+    departureTime: string;
+    arrivalTime: string;
+  }
 
-const BusSchema: Schema = new Schema<IBus>({
-  name: { type: String, required: true },
-  route: { type: String, required: true },
-  totalSeats: { type: Number, required: true },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
-});
+  export interface IBus extends Document {
+    name: string;
+    totalSeats: number;
+    schedules: ISchedule[]; // Embedded array of schedules
+  }
 
-export default mongoose.model<IBus>('Bus', BusSchema);
+  const ScheduleSchema: Schema = new Schema<ISchedule>({
+    from: { type: String, required: true },
+    to: { type: String, required: true },
+    departureTime: { type: String, required: true },
+    arrivalTime: { type: String, required: true },
+  });
+
+  const BusSchema: Schema = new Schema<IBus>({
+    name: { type: String, required: true },
+    totalSeats: { type: Number, required: true },
+    schedules: [ScheduleSchema], // Embedded schedule schema inside the Bus schema
+  });
+
+  export default mongoose.model<IBus>('Bus', BusSchema);
