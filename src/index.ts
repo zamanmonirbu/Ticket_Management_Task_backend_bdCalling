@@ -13,14 +13,22 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
-// app.use(cors());
 
 app.use(cors({
-  origin: '*',
+  origin: 'https://ticket-management-task-frontend-bd-calling.vercel.app', // Corrected the typo "fronend" to "frontend"
   credentials: true
 }));
 
-
+// Handle Preflight Requests
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://ticket-management-task-frontend-bd-calling.vercel.app');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   if (req.method === 'OPTIONS') {
+//     return res.sendStatus(200);
+//   }
+//   next();
+// });
 
 // Routes
 app.use('/auth', authRoutes);

@@ -108,7 +108,7 @@ npm run dev
 ```
 
 
-The application will be accessible at **http://localhost:5173**.
+The application will be accessible at **http://localhost:5000**.
 
 ## Usage
 1. Register a new user or log in using existing credentials.
