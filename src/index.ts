@@ -1,12 +1,10 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import adminRoutes from './routes/adminRoutes';
 import userRoutes from './routes/userRoutes';
-import  { Request, Response, NextFunction } from 'express';
-
 
 dotenv.config();
 
@@ -17,10 +15,11 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 app.use(cors({
-  origin: 'https://ticket-management-task-frontend-bd-calling.vercel.app', // Corrected the typo "fronend" to "frontend"
-  credentials: true
+  origin: 'https://ticket-management-task-frontend-bd-calling.vercel.app', 
+  credentials: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization'] 
 }));
-
 
 app.options('*', (req: Request, res: Response) => {
   res.header('Access-Control-Allow-Origin', 'https://ticket-management-task-frontend-bd-calling.vercel.app');
@@ -29,16 +28,12 @@ app.options('*', (req: Request, res: Response) => {
   res.sendStatus(200);
 });
 
-
-// Routes
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
 
-// Database Connection
 mongoose.connect(process.env.MONGO_URI!)
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('DB connection error', error));
 
-// Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
