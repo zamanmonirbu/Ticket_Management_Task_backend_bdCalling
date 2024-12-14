@@ -5,6 +5,8 @@ import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import adminRoutes from './routes/adminRoutes';
 import userRoutes from './routes/userRoutes';
+import  { Request, Response, NextFunction } from 'express';
+
 
 dotenv.config();
 
@@ -19,16 +21,14 @@ app.use(cors({
   credentials: true
 }));
 
-// Handle Preflight Requests
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', 'https://ticket-management-task-frontend-bd-calling.vercel.app');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   if (req.method === 'OPTIONS') {
-//     return res.sendStatus(200);
-//   }
-//   next();
-// });
+
+app.options('*', (req: Request, res: Response) => {
+  res.header('Access-Control-Allow-Origin', 'https://ticket-management-task-frontend-bd-calling.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.sendStatus(200);
+});
+
 
 // Routes
 app.use('/auth', authRoutes);
