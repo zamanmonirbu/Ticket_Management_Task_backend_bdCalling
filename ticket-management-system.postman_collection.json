@@ -1,205 +1,202 @@
 {
-    "info": {
-      "name": "Ticket Management System",
-      "_postman_id": "12345678-90ab-cdef-1234-567890abcdef",
-      "description": "API documentation for Ticket Management System. This system allows users to register, login, and purchase tickets for buses. Admins can manage buses and tickets.",
-      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  "info": {
+    "name": "Ticket Management System",
+    "description": "Postman Collection for Ticket Management System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Md. Moniruzzaman\",\n  \"email\": \"monir@gmail.com\",\n  \"password\": \"password123\",\n  \"address\": \"123 Main St\",\n  \"mobile\": \"1234567890\",\n  \"role\": \"admin\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"monir@gmail.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Logout User",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/auth/logout"
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/refresh",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{refresh_token}}\"\n}"
+            }
+          }
+        }
+      ]
     },
-    "item": [
-      {
-        "name": "Authentication",
-        "item": [
-          {
-            "name": "Register User",
-            "request": {
-              "method": "POST",
-              "header": [],
-              "body": {
-                "mode": "raw",
-                "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
-              },
-              "url": {
-                "raw": "{{base_url}}/auth/register",
-                "host": ["{{base_url}}"],
-                "path": ["auth", "register"]
-              }
-            },
-            "response": []
-          },
-          {
-            "name": "Login User",
-            "request": {
-              "method": "POST",
-              "header": [],
-              "body": {
-                "mode": "raw",
-                "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
-              },
-              "url": {
-                "raw": "{{base_url}}/auth/login",
-                "host": ["{{base_url}}"],
-                "path": ["auth", "login"]
-              }
-            },
-            "response": []
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "View Buses",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/user/buses"
           }
-        ]
-      },
-      {
-        "name": "Admin",
-        "item": [
-          {
-            "name": "Add Bus",
-            "request": {
-              "method": "POST",
-              "header": [
-                {
-                  "key": "Authorization",
-                  "value": "Bearer {{token}}",
-                  "type": "text"
-                }
-              ],
-              "body": {
-                "mode": "raw",
-                "raw": "{\n  \"name\": \"Bus 101\",\n  \"route\": \"City A to City B\",\n  \"totalSeats\": 40\n}"
-              },
-              "url": {
-                "raw": "{{base_url}}/admin/bus",
-                "host": ["{{base_url}}"],
-                "path": ["admin", "bus"]
-              }
-            },
-            "response": []
-          },
-          {
-            "name": "Update Bus",
-            "request": {
-              "method": "PUT",
-              "header": [
-                {
-                  "key": "Authorization",
-                  "value": "Bearer {{token}}",
-                  "type": "text"
-                }
-              ],
-              "body": {
-                "mode": "raw",
-                "raw": "{\n  \"name\": \"Updated Bus Name\",\n  \"route\": \"New Route\",\n  \"totalSeats\": 50\n}"
-              },
-              "url": {
-                "raw": "{{base_url}}/admin/bus/:id",
-                "host": ["{{base_url}}"],
-                "path": ["admin", "bus", ":id"]
-              }
-            },
-            "response": []
-          },
-          {
-            "name": "Delete Bus",
-            "request": {
-              "method": "DELETE",
-              "header": [
-                {
-                  "key": "Authorization",
-                  "value": "Bearer {{token}}",
-                  "type": "text"
-                }
-              ],
-              "url": {
-                "raw": "{{base_url}}/admin/bus/:id",
-                "host": ["{{base_url}}"],
-                "path": ["admin", "bus", ":id"]
-              }
-            },
-            "response": []
-          },
-          {
-            "name": "Add Ticket",
-            "request": {
-              "method": "POST",
-              "header": [
-                {
-                  "key": "Authorization",
-                  "value": "Bearer {{token}}",
-                  "type": "text"
-                }
-              ],
-              "body": {
-                "mode": "raw",
-                "raw": "{\n  \"busId\": \"63a16d58f2f9b2c478c2fabb\",\n  \"price\": 25,\n  \"timeSlot\": \"2024-12-15T10:00:00Z\"\n}"
-              },
-              "url": {
-                "raw": "{{base_url}}/admin/ticket",
-                "host": ["{{base_url}}"],
-                "path": ["admin", "ticket"]
-              }
-            },
-            "response": []
+        },
+        {
+          "name": "View Available Tickets",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/user/tickets?busId={{busId}}"
           }
-        ]
-      },
-      {
-        "name": "User",
-        "item": [
-          {
-            "name": "View All Buses",
-            "request": {
-              "method": "GET",
-              "url": {
-                "raw": "{{base_url}}/buses",
-                "host": ["{{base_url}}"],
-                "path": ["buses"]
-              }
-            },
-            "response": []
-          },
-          {
-            "name": "View Available Tickets",
-            "request": {
-              "method": "GET",
-              "url": {
-                "raw": "{{base_url}}/tickets",
-                "host": ["{{base_url}}"],
-                "path": ["tickets"]
-              }
-            },
-            "response": []
-          },
-          {
-            "name": "Purchase Ticket",
-            "request": {
-              "method": "POST",
-              "header": [
-                {
-                  "key": "Authorization",
-                  "value": "Bearer {{token}}",
-                  "type": "text"
-                }
-              ],
-              "body": {
-                "mode": "raw",
-                "raw": "{\n  \"ticketId\": \"63a16d58f2f9b2c478c2fabc\"\n}"
-              },
-              "url": {
-                "raw": "{{base_url}}/tickets/purchase",
-                "host": ["{{base_url}}"],
-                "path": ["tickets", "purchase"]
-              }
-            },
-            "response": []
+        },
+        {
+          "name": "Search Bus",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/user/bus/search",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": \"Dhaka\",\n  \"to\": \"Chittagong\",\n  \"departureTime\": \"07:00 PM\"\n}"
+            }
           }
-        ]
-      }
-    ],
-    "variable": [
-      {
-        "key": "base_url",
-        "value": "http://localhost:5000"
-      },
-      {
-        "key": "token",
-        "value": ""
-      }
-    ]
-  }
-  
+        },
+        {
+          "name": "View Booked Seats",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/user/booked-seats/{{busId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Add Bus",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/admin/bus",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kuakata Travels\",\n  \"totalSeats\": 40,\n  \"schedules\": [\n    { \"from\": \"Barishal\", \"to\": \"Kuakata\", \"departureTime\": \"10:00 AM\", \"arrivalTime\": \"11:00 AM\" }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "View Buses",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/bus"
+          }
+        },
+        {
+          "name": "Update Bus",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/admin/bus/{{busId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Bus\",\n  \"totalSeats\": 50\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Bus",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/bus/{{busId}}"
+          }
+        },
+        {
+          "name": "Add Ticket",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/admin/ticket",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"userMobile\": \"1234567890\",\n  \"seats\": [{ \"seatNumber\": 1, \"price\": 100, \"busId\": \"{{busId}}\" }],\n  \"totalPrice\": 100,\n  \"paymentStatus\": \"Paid\"\n}"
+            }
+          }
+        },
+        {
+          "name": "View Tickets",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/tickets"
+          }
+        },
+        {
+          "name": "Update Ticket",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/admin/ticket/{{ticketId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentStatus\": \"paid\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Ticket",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/ticket/{{ticketId}}"
+          }
+        },
+        {
+          "name": "Fetch Users",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/users"
+          }
+        },
+        {
+          "name": "Update User Status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/admin/users/{{userId}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/users/{{userId}}"
+          }
+        }
+      ]
+    }
+  ]
+}
